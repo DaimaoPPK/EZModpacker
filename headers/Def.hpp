@@ -89,5 +89,10 @@ void Interpret(){
         std::string arr[] = {split(line, '/').at(0), split(line, '/').at(1)};
         CurseForgeFix(arr);
         dlcount++;
+    } else if (line.substr(0,4) == "cfm!"){
+         std::string arr[] = {split(line.substr(4), "/").at(0), split(line.substr(4), "/").at(1)};
+         CurseForgeFix(arr);
+         dlcount++;
     }
+
 }
