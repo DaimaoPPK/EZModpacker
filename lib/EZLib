@@ -1,0 +1,11 @@
+#pragma once
+
+extern "C"{
+    std::vector<std::string> split(std::string stringToBeSplitted, std::string delimeter);
+    size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream);
+    void makedir();
+    void download(std::string url, std::string output, bool re);
+    void CurseForgeFix(std::string splittedline[], bool re);
+    void ProcessReport();
+    void Interpret();
+} 
