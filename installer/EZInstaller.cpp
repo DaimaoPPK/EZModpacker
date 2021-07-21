@@ -12,4 +12,8 @@ int main(int argc, char const *argv[]){
         file.close();
         ProcessReport();
     }
+
+    if (argc < 2){
+        printf("Usage: EZInstaller [modpackinfo_file]\n");
+    }
 }
