@@ -117,7 +117,7 @@ impl Interpreter{
         for r in result {
             match r {
                 Err(e) => {print!("Error occured! {}", e.to_string());self.errorc+=1;},
-                Ok(s) => print!("Success: {}", &s),
+                Ok(s) => {print!("Success: {}", &s);self.dlc += 1;},
             };
         }
     }
@@ -130,6 +130,8 @@ impl Interpreter{
         let text = String::from(value[1]);
         let p1 = &num[..len];
         let p2 = &num[len..];
+        let p2 = if &p2[0..1] == "0"{&p2[1..]} else {p2};
+        let p2 = if &p2[0..1] == "0"{&p2[1..]} else {p2};
         let value = format!("https://media.forgecdn.net/files/{}/{}/{}", p1, p2, text);
         println!("{}", value);
 
@@ -144,7 +146,7 @@ impl Interpreter{
         for r in result {
             match r {
                 Err(e) => {print!("Error occured! {}", e.to_string());self.errorc+=1;},
-                Ok(s) => print!("Success: {}", &s),
+                Ok(s) => {print!("Success: {}", &s);self.dlc += 1;},
             };
         }
     }
