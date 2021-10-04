@@ -1,0 +1,10 @@
+Program = _{Statement ~ (NEWLINE* ~ (Statement | Section))* | Section ~ (NEWLINE* ~ Section)*}
+Section = {"[" ~ ASCII_ALPHANUMERIC* ~ "]"}
+Statement = {Key ~ Attribute? ~ ":" ~ Value}
+Key = {ASCII_ALPHA+}
+Value = {'!'..'~'+}
+Attribute = {"<" ~ AttrPair ~ ("," ~ AttrPair)* ~ ">"}
+AttrPair = {AttrKey ~ "=" ~ AttrValue}
+AttrKey = {ASCII_ALPHANUMERIC+}
+AttrValue = {ASCII_ALPHANUMERIC+}
+WHITESPACE = _{ " " | "\t"}
