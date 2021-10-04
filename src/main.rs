@@ -2,7 +2,6 @@
 
 mod parser;
 mod file;
-mod debug;
 mod ast;
 mod operations;
 
