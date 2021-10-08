@@ -1,12 +1,5 @@
-#![allow(dead_code)]
-
-mod parser;
-mod file;
-mod ast;
-mod operations;
-
-#[macro_use]
-extern crate pest_derive;
+extern crate ezmodpacker;
+use ezmodpacker::{file, parser, operations};
 
 use std::env;
 
