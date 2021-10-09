@@ -25,7 +25,7 @@ Download from link(or other values)
 
 ## Section
 ```[${x}]```  
-downloads following this will be installed in ${x} directory
+downloads following this will be put in ${x} directory
 
 ## Attribute
 `<>` following left value is attribute field. You can seperate each attribute with comma.
