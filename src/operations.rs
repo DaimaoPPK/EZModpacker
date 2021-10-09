@@ -60,6 +60,7 @@ impl Interpreter{
                 ast::Node::Error => {println!("Error on {}th non-blank line", self.lc);self.errorc+=1;}
             }
         }
+        println!("{:#?}", self.file_list);
         self.write_meta();
         println!("----------------------------------------");
         println!("PROCESS REPORT");
@@ -78,18 +79,14 @@ impl Interpreter{
             format!("{}/.metadata", self.name)}else{format!(".metadata")
         };
 
-        self.metadata.content = format!(
-            "[Modpack_Info]
-            Modpack Name: {}\n
-            Modpack Version: {}\n
-            Minecraft Version: {}",
+        self.metadata.content = format!("[Modpack_Info]\nModpack Name: {}\nModpack Version: {}\nMinecraft Version: {}",
             self.name, self.version, self.mcversion
         );
 
         if self.file_list.len()>0{
             self.metadata.content.push_str("\n[files]");
             for string in &self.file_list{
-                self.metadata.content.push_str(format!("\n{}", string));
+                self.metadata.content.push_str(format!("\n{}", string).as_str());
             }
         }
 
@@ -151,7 +148,11 @@ impl Interpreter{
         for r in result {
             match r {
                 Err(e) => {print!("Error occured! {}", e.to_string());self.errorc+=1;},
-                Ok(s) => {print!("Success: {}", &s);self.dlc += 1;},
+                Ok(s) => {
+                    print!("Success: {}", &s);
+                    self.file_list.push(s.file_name.into_os_string().into_string().unwrap());
+                    self.dlc += 1;
+                },
             };
         }
     }
@@ -182,7 +183,11 @@ impl Interpreter{
         for r in result {
             match r {
                 Err(e) => {print!("Error occured! {}", e.to_string());self.errorc+=1;},
-                Ok(s) => {print!("Success: {}", &s);self.dlc += 1;},
+                Ok(s) => {
+                    print!("Success: {}", &s);
+                    self.file_list.push(s.file_name.into_os_string().into_string().unwrap());
+                    self.dlc += 1;
+                },
             };
         }
     }
