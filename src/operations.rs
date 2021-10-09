@@ -14,9 +14,11 @@ pub struct Interpreter{
     instc: u16,
     errorc: u16,
     folderc: u16,
+    file_list: Vec<String>
 }
 
 impl Interpreter{
+    /// Create new Interpreter
     pub fn new() ->Interpreter{
         Interpreter{
             metadata: file::File::new(String::new(), String::new()),
@@ -30,9 +32,17 @@ impl Interpreter{
             instc: 0,
             errorc: 0,
             folderc: 0,
+            file_list: Vec::new()
         }
     }
 
+    /// Evaluate AST and perform operations
+    /// # Example
+    /// ```
+    /// let ast = parser::parse(file_content).unwrap();
+    /// let mut interpreter = operations::Interpreter::new();
+    /// interpreter.eval(ast);
+    /// ```
     pub fn eval(&mut self, ast: Vec<ast::Node>){
         for node in ast{
             self.lc += 1;
@@ -50,10 +60,7 @@ impl Interpreter{
                 ast::Node::Error => {println!("Error on {}th non-blank line", self.lc);self.errorc+=1;}
             }
         }
-        self.metadata.path = if self.root==true{format!("{}/.metadata", self.name)}else{format!(".metadata")};
-        self.metadata.content = format!("Modpack Name: {}\nModpack Version: {}\nMinecraft Version: {}", self.name, self.version, self.mcversion);
-        self.metadata.write();
-
+        self.write_meta();
         println!("----------------------------------------");
         println!("PROCESS REPORT");
         println!("----------------------------------------");
@@ -65,6 +72,31 @@ impl Interpreter{
         println!("----------------------------------------");
     }
 
+    /// Write metafile containing name, version, minecraft version and file list
+    fn write_meta(&mut self){
+        self.metadata.path = if self.root==true{
+            format!("{}/.metadata", self.name)}else{format!(".metadata")
+        };
+
+        self.metadata.content = format!(
+            "[Modpack_Info]
+            Modpack Name: {}\n
+            Modpack Version: {}\n
+            Minecraft Version: {}",
+            self.name, self.version, self.mcversion
+        );
+
+        if self.file_list.len()>0{
+            self.metadata.content.push_str("\n[files]");
+            for string in &self.file_list{
+                self.metadata.content.push_str(format!("\n{}", string));
+            }
+        }
+
+        self.metadata.write();
+    }
+
+    /// Evaluate Statement and perform operations
     fn eval_statement(&mut self, statement: ast::Statement){
         match statement.key.as_str(){
             "name" => self.set_name(statement.value, statement.attributes),
@@ -75,6 +107,7 @@ impl Interpreter{
         }
     }
 
+    /// Set the name of modpack
     fn set_name(&mut self, value: String, attributes: Vec<ast::Attribute>){
         if attributes.len() > 0 {for attribute in attributes{
             match attribute.key.as_str(){
@@ -91,6 +124,7 @@ impl Interpreter{
         self.name = value;
     }
 
+    /// Download operation
     fn download(&mut self, value: String, attributes: Vec<ast::Attribute>){
         if attributes.len() > 0 {for attribute in attributes{
             match attribute.key.as_str(){
@@ -121,7 +155,9 @@ impl Interpreter{
             };
         }
     }
-
+    
+    /// Get the link of actual file using ID and filename
+    // dev's note: I need to clean this...
     fn download_from_curseforge(&mut self, value: String){
         let value = value.split("/");
         let value = value.collect::<Vec<&str>>();

@@ -24,6 +24,7 @@ pub enum Node{
 impl Attribute{
     pub fn new(key: String, value: String) -> Attribute{Attribute{key, value}}
 
+    /// Build Attribute from pair
     pub fn from(pair: pest::iterators::Pair<Rule>) -> Attribute{
         let mut key = String::new();
         let mut value = String::new();
@@ -31,7 +32,7 @@ impl Attribute{
             match pair1.as_rule(){
                 Rule::AttrKey => key = String::from(pair1.as_str()),
                 Rule::AttrValue => value = String::from(pair1.as_str()),
-                _ => ()
+                _ => println!("Something went wrong while parsing Attribute\nContent: {}", pair1.as_str())
             }
         }
         Attribute::new(key, value)
@@ -41,6 +42,7 @@ impl Attribute{
 impl Statement{
     pub fn new(key: String, value: String, attributes: Vec<Attribute>) -> Statement{Statement{key, value, attributes}}
 
+    /// Build Statement from pair
     pub fn from(pair: pest::iterators::Pair<Rule>) -> Statement{
         let mut key = String::new();
         let mut value = String::new();
