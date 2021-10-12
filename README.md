@@ -1,3 +1,5 @@
+Please check out [pest](https://github.com/pest-parser/pest). It is such a cool and simple to use library for parsing.
+
 # Overview
 Install modpack from .modpackinfo files which can be easily share in web.
 
