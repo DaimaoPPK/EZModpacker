@@ -1,13 +1,15 @@
 /*
-* LGPLv3 License
-* Copyright (C) 2021 Phone Pyae Kyaw
-* 
-* See LGPLv3_LICENSE.md for informations
+* ISC License
+*
+* Copyright <2021> <Phone Pyae Kyaw>
+*
+* Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+* THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
 use crate::ast;
 use crate::file;
-use downloader::Downloader;
+use evildownloader::download::Download;
 
 pub struct Interpreter{
     name: String,
@@ -67,7 +69,6 @@ impl Interpreter{
                 ast::Node::Error => {println!("Error on {}th non-blank line", self.lc);self.errorc+=1;}
             }
         }
-        println!("{:#?}", self.file_list);
         self.write_meta();
         println!("----------------------------------------");
         println!("PROCESS REPORT");
@@ -144,23 +145,16 @@ impl Interpreter{
                 _ => println!("unknown attribute: {}", attribute.key)
             }
         }}
-        let mut downloader = Downloader::builder()
-            .download_folder(std::path::Path::new(&self.path))
-            .build()
-            .unwrap();
+        let downloader = Download::new(&value, &self.path);
+        let result = downloader.download();
 
-        let dl1 = downloader::Download::new(&value);
-        let result = downloader.download(&[dl1]).unwrap();
-
-        for r in result {
-            match r {
-                Err(e) => {print!("Error occured! {}", e.to_string());self.errorc+=1;},
-                Ok(s) => {
-                    print!("Success: {}", &s);
-                    self.file_list.push(s.file_name.into_os_string().into_string().unwrap());
-                    self.dlc += 1;
-                },
-            };
+        match result {
+            Err(e) => {print!("Error occured! {}", e.to_string());self.errorc+=1;},
+            Ok(s) => {
+                print!("Success: {}", &s);
+                self.file_list.push(s.filename);
+                self.dlc += 1;
+            }
         }
     }
     
@@ -179,23 +173,16 @@ impl Interpreter{
         let value = format!("https://media.forgecdn.net/files/{}/{}/{}", p1, p2, text);
         println!("{}", value);
 
-        let mut downloader = Downloader::builder()
-            .download_folder(std::path::Path::new(&self.path))
-            .build()
-            .unwrap();
+        let downloader = Download::new(&value, &self.path);
+        let result = downloader.download();
 
-        let dl1 = downloader::Download::new(&value);
-        let result = downloader.download(&[dl1]).unwrap();
-
-        for r in result {
-            match r {
-                Err(e) => {print!("Error occured! {}", e.to_string());self.errorc+=1;},
-                Ok(s) => {
-                    print!("Success: {}", &s);
-                    self.file_list.push(s.file_name.into_os_string().into_string().unwrap());
-                    self.dlc += 1;
-                },
-            };
+        match result {
+            Err(e) => {print!("Error occured! {}", e.to_string());self.errorc+=1;},
+            Ok(s) => {
+                print!("Success: {}", &s);
+                self.file_list.push(s.filename);
+                self.dlc += 1;
+            }
         }
     }
 }

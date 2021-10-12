@@ -4,12 +4,10 @@ version = "0.1.0"
 authors = ["PPK <ath455756@gmail.com>"]
 edition = "2018"
 repository = "https://github.com/DaimaoPPK/EZModpacker"
-license = "ISC AND LGPLv3"
-keywords = ["minecraft"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+license = "(ISC OR MIT OR Apache-2.0) AND LGPLv3"
+keywords = ["minecraft", "cmd"]
 
 [dependencies]
 pest = "2.0"
 pest_derive = "2.0"
-downloader = "0.2.6"
+evildownloader = {git = "https://github.com/DaimaoPPK/EvilDownloader", branch = "main"}
