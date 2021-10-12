@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["PPK <ath455756@gmail.com>"]
 edition = "2018"
 repository = "https://github.com/DaimaoPPK/EZModpacker"
-license-file = "LGPLv3_LICENSE.md"
+license = "ISC AND LGPLv3"
 keywords = ["minecraft"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

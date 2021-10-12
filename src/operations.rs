@@ -1,3 +1,10 @@
+/*
+* LGPLv3 License
+* Copyright (C) 2021 Phone Pyae Kyaw
+* 
+* See LGPLv3_LICENSE.md for informations
+*/
+
 use crate::ast;
 use crate::file;
 use downloader::Downloader;
