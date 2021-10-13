@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["PPK <ath455756@gmail.com>"]
 edition = "2018"
 repository = "https://github.com/DaimaoPPK/EZModpacker"
-license = "(ISC OR MIT OR Apache-2.0) AND LGPLv3"
+license = "ISC OR MIT OR Apache-2.0"
 keywords = ["minecraft", "cmd"]
 
 [dependencies]
