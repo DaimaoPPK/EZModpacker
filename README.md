@@ -4,10 +4,9 @@ Please check out [pest](https://github.com/pest-parser/pest). It is such a cool 
 Install modpack from .modpackinfo files which can be easily share in web.
 
 # Installation
-1. ```git clone https://github.com/DaimaoPPK/EZModpacker.git```
-2. Install Rust and Cargo from [this](https://www.rust-lang.org/tools/install).
-3. ```cd EZModpacker``` and ```cargo build --release```
-4. Output file is at `output/release/ezmodpacker`
+1. Install Rust and Cargo from [this](https://www.rust-lang.org/tools/install).
+2. ```cargo install --git https://github.com/DaimaoPPK/EZModpacker.git```
+3. Executable file is installed at ${HOME}/.cargo/bin in unix and %USERPROFILE%\.cargo\bin in windows
 
 # Syntax
 **NOTE: REPLACE ${x} WITH RESPECTIVE VALUE**
