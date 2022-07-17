@@ -1,7 +1,7 @@
 Please check out [pest](https://github.com/pest-parser/pest). It is such a cool and simple to use library for parsing.
 
 # Overview
-Install modpack from .modpackinfo files which can be easily share in web.
+Install modpack from .modpackinfo files which can be easily shared in web.
 
 # Installation
 1. Install Rust and Cargo from [this](https://www.rust-lang.org/tools/install).
